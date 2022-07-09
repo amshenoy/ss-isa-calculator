@@ -1,0 +1,51 @@
+<html>
+	<head>
+		<title>Stocks & Shares ISA Providers</title>
+		<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+		<meta name="description" content="Stocks Shares ISA Providers">
+		<meta name="keywords" content="stocks, equities, comparison, analysis, calculator, engineering">
+		<meta name="author" content="Abhishek Shenoy">
+		<meta name="viewport" content="width=device-width, initial-scale=1.0">
+		<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css" integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh" crossorigin="anonymous">
+	</head>
+	<body>
+		<div id="main">
+			<nav id="menu" style="padding:10px;">
+				<div class="container">
+					<div class="row">
+						<div class="col-sm-4">
+							<div class="input-group mb-3">
+								<div class="input-group-prepend">
+									<span class="input-group-text" style="font-size: 14px;">Num Monthly Fund Trades</span>
+								</div>
+								<input type="text" id="num-funds" class="form-control" type="number" value="0"/>
+							</div>
+						</div>
+						<div class="col-sm-4">
+							<div class="input-group mb-3">
+								<div class="input-group-prepend">
+									<span class="input-group-text" style="font-size: 14px;">Num Monthly Stock Trades</span> 
+								</div>
+								<input type="text" id="num-stocks" class="form-control" type="number" value="0"/>
+							</div>
+						</div>
+						<div class="col-sm-4">
+							<button id="simulate" class="btn btn-primary">
+								<span id="sim-available">Update</span>
+								<span id="sim-loading"class="spinner-grow spinner-grow-sm" role="status" aria-hidden="true" style="display: none;"></span>
+							</button>
+						</div>
+					</div>
+				</div>
+			</nav>
+			<div class="container">
+				<div class="row">
+					<div id="plot"></div>
+				</div>
+			</div>
+		</div>
+		<script src="https://cdn.plot.ly/plotly-latest.min.js"></script>
+		<!-- <script src="https://cdn.jsdelivr.net/gh/nicolaspanel/numjs@0.15.1/dist/numjs.min.js"></script> -->
+		<script src="./assets/js/app.js"></script>
+	</body>
+</html>
