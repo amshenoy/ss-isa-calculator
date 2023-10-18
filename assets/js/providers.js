@@ -59,7 +59,7 @@ function tier_sum(tiers, charges, value){
 	return charges.multiply( A.add(B) ).nansum()
 }
 
-
+// https://www.hl.co.uk/investment-services/isa/savings-interest-rates-and-charges
 function HL(F, S, Nf, Ns){
 	var V = F + S
 	var tiers = [0, 250e3, 500e3, 1000e3, 2000e3, INF]
@@ -69,24 +69,23 @@ function HL(F, S, Nf, Ns){
 	var fund_trans_cost = 0
 	var share_trans_cost = [11.95, 8.95, 5.95]
 	
-	var holding_cost = tier_sum(tiers, charges, V)
+	var holding_cost = tier_sum(tiers, charges, F) + Math.Min(S*0.45/100, 45)
 	var trans_cost = ( Nf*fund_trans_cost + tier_sum(share_trans_tiers, share_trans_cost, Ns) ) * 12
 
 	return holding_cost + trans_cost
 }
 
-
+// https://www.ajbell.co.uk/faq/what-are-charges-my-stocks-and-shares-isa
 function AJB(F, S, Nf, Ns){
 	var V = F + S
-	var tiers = [0, 250e3, 500e3, 1000e3, 2000e3, INF]
-	var fund_charges = nj.array([0.25, 0.1, 0, 0, 0]).divide(100)
-	var share_charges = nj.array([0.25, 0, 0, 0, 0]).divide(100)
-
+	var tiers = [0, 250e3, 1000e3, 2000e3, INF]
+	var fund_charges = nj.array([0.25, 0.1, 0.05, 0]).divide(100)
+	
 	var share_trans_tiers = [0, 10, 20, INF]
 	var fund_trans_cost = 1.5
 	var share_trans_cost = [9.95, 4.95, 4.95]
 	
-	var holding_cost = tier_sum(tiers, fund_charges, F) + Math.max(tier_sum(tiers, share_charges, S), 3.5*12)
+	var holding_cost = tier_sum(tiers, fund_charges, F) + Math.min(S*0.25/100, 3.5*12)
 	var trans_cost = ( Nf*fund_trans_cost + tier_sum(share_trans_tiers, share_trans_cost, Ns) ) * 12
 
 	return holding_cost + trans_cost
@@ -95,18 +94,14 @@ function AJB(F, S, Nf, Ns){
 
 function BARC(F, S, Nf, Ns){
 	var V = F + S
-	//tiers = [0, 250e3, 500e3, 1000e3, 2000e3, np.inf]
-	//charges = np.array([0.2, 0.2, 0.2, 0.2, 0.2])/100
+	
 	var fund_charge = 0.2/100
 	var share_charge = 0.1/100
 	
-	//share_trans_tiers = [0, 10, 20, np.inf]
 	var fund_trans_cost = 3
-	//share_trans_cost = [6, 6, 6]
 	var share_trans_cost = 6
 	
 	var holding_cost = Math.max(Math.min(fund_charge * F + share_charge * S, 125*12), 4*12)
-	//trans_cost = ( Nf*fund_trans_cost + tier_sum(share_trans_tiers, share_trans_cost, Ns) ) * 12
 	var trans_cost = (Nf*fund_trans_cost + Ns*share_trans_cost)*12
 
 	return holding_cost + trans_cost
