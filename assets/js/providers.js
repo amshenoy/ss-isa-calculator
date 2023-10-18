@@ -69,7 +69,7 @@ function HL(F, S, Nf, Ns){
 	var fund_trans_cost = 0
 	var share_trans_cost = [11.95, 8.95, 5.95]
 	
-	var holding_cost = tier_sum(tiers, charges, F) + Math.Min(S*0.45/100, 45)
+	var holding_cost = tier_sum(tiers, charges, F) + Math.min(S*0.45/100, 45)
 	var trans_cost = ( Nf*fund_trans_cost + tier_sum(share_trans_tiers, share_trans_cost, Ns) ) * 12
 
 	return holding_cost + trans_cost
