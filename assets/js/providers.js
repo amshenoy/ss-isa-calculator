@@ -137,8 +137,16 @@ function II(F, S, Nf, Ns) {
 }
 
 
+const mHL = memoize(HL)
+const mAJB = memoize(AJB)
+const mBARC = memoize(BARC)
+const mFID = memoize(FID)
+const mII = memoize(II)
+const mMIN = memoize(MIN)
+
+
 function MIN(f, s, Nf, Ns) {
-    var providers = [HL, AJB, BARC, FID, II]
+    var providers = [mHL, mAJB, mBARC, mFID, mII]
     var arr = []
     for (let provider of providers) {
         arr.push(provider(f, s, Nf, Ns))
@@ -147,11 +155,20 @@ function MIN(f, s, Nf, Ns) {
 }
 
 
+function memoize(fn) {
+    const cache = new Map();
+    return (...args) => {
+        const key = JSON.stringify(args);
+        return cache.has(key) ? cache.get(key) : cache.set(key, fn(...args)).get(key);
+    }
+}
+
+
 const PROVIDERS = {
-    "HL": HL,
-    "AJB": AJB,
-    "BARC": BARC,
-    "FID": FID,
-    "II": II,
-    "MIN": MIN
+    "HL": mHL,
+    "AJB": mAJB,
+    "BARC": mBARC,
+    "FID": mFID,
+    "II": mII,
+    "MIN": mMIN,
 }
