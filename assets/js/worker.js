@@ -14,37 +14,35 @@ self.onmessage = function (e) {
     var Ns = data.stockTrans;
 
     // PROCESS DATA HERE
-    var labels = ["HL", "AJB", "BARC", "FID", "II", "MIN"]
-    var providers = [HL, AJB, BARC, FID, II, MIN]
 
     // Create template for provider value matrix
-    var templateZ = {}
-    for (var provider of labels) {
-        templateZ[provider] = [];
+    const templateZ = {}
+    for (var label of Object.keys(PROVIDERS)) {
+        templateZ[label] = [];
     }
+    const templateZString = JSON.stringify(templateZ)
 
-    var zPts = JSON.parse(JSON.stringify(templateZ));
+    var zPts = JSON.parse(templateZString);
     var xPts = [];
     var yPts = [];
 
     for (x = 0; x <= xlim; x += xstep) {
-        let zTemp = JSON.parse(JSON.stringify(templateZ));
+        let zTemp = JSON.parse(templateZString);
         let yTemp = [];
         let xTemp = [];
         for (y = 0; y <= ylim; y += ystep) {
             xTemp.push(x);
             yTemp.push(y);
-            for (let [i, provider] of providers.entries()) {
-                zTemp[labels[i]].push(provider(x, y, Nf, Ns));
+            for (let [label, provider] of Object.entries(PROVIDERS)) {
+                zTemp[label].push(provider(x, y, Nf, Ns));
             }
         }
         xPts.push(xTemp);
         yPts.push(yTemp);
-        for (let [i, provider] of providers.entries()) {
-            zPts[labels[i]].push(zTemp[labels[i]]);
+        for (let label of Object.keys(PROVIDERS)) {
+            zPts[label].push(zTemp[label]);
         }
     }
-
 
     var result = [xPts, yPts, zPts];
 

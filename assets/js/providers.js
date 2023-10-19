@@ -140,8 +140,18 @@ function II(F, S, Nf, Ns) {
 function MIN(f, s, Nf, Ns) {
     var providers = [HL, AJB, BARC, FID, II]
     var arr = []
-    for (let [i, provider] of providers.entries()) {
+    for (let provider of providers) {
         arr.push(provider(f, s, Nf, Ns))
     }
     return Math.min(...arr)
+}
+
+
+const PROVIDERS = {
+    "HL": HL,
+    "AJB": AJB,
+    "BARC": BARC,
+    "FID": FID,
+    "II": II,
+    "MIN": MIN
 }
